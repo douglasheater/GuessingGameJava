@@ -1,0 +1,111 @@
+package guessingGame;
+
+import java.util.Random;
+import java.util.Scanner;
+
+
+public class GuessingGame {
+    int number;
+    int guessNumber;
+    int counter;
+
+    void generateNumberToBeGuessed(){
+        Random rand = new Random();
+        number = rand.nextInt(100);
+    }
+
+    void makeGuess(int guessNumber) {
+        this.guessNumber = guessNumber;
+        counter++;
+    }
+
+    boolean isCorrectGuess(){
+        return guessNumber == number;
+    }
+
+
+    static void displayWelcomeMessage()
+    {
+        System.out.println("Welcome to the Guess the Number Game");
+        System.out.println("++++++++++++++++++++++++++++++++++++");
+        System.out.println();
+    }
+
+    static void displayPleaseGuessMessage()
+    {
+        System.out.println("I'm thinking of a number from 1 to 100.");
+        System.out.println("Try to guess it.");
+        System.out.println();
+    }
+    void displayCorrectGuessMessage(){
+        System.out.println("You got it in " + counter + " tries.");
+
+        if (counter <= 3)
+        {
+            System.out.println("Great work! You are a mathematical wizard");
+        }
+        else if (counter > 7)
+        {
+            System.out.println("What took you so long");
+
+        }
+        else
+        {
+            System.out.println("Not too bad! You've got some potential");
+        }
+    }
+
+    void displayGuessAgainMessage(){
+        if(number - guessNumber > 10)
+        {
+            System.out.println("Way too low! Guess again");
+            System.out.println();
+        }
+        else if(guessNumber - number > 10)
+        {
+            System.out.println("Way too high! Guess again");
+            System.out.println();
+        }
+        else if(guessNumber < number)
+        {
+            System.out.println("Too low! Guess again");
+            System.out.println();
+        }
+        else if (guessNumber > number)
+        {
+            System.out.println("Too high! Guess again");
+            System.out.println();
+        }
+    }
+
+
+    public static void main(String[] args)
+    {
+        char response = 'y';
+        GuessingGame game = new GuessingGame();
+        displayWelcomeMessage();
+        while(response !='n') {
+            game.generateNumberToBeGuessed();
+            game.counter = 0;
+            displayPleaseGuessMessage();
+            while(game.isCorrectGuess() == false) {
+            	System.out.println("Enter a number between 1 and 100: ");
+                Scanner input = new Scanner(System.in);
+                int guess = input.nextInt();
+                game.makeGuess(guess);
+                if(game.isCorrectGuess() == true) {
+                    game.displayCorrectGuessMessage();
+                    break;
+                }
+                else {
+                    game.displayGuessAgainMessage();
+                }
+            }
+            System.out.println("\nContinue?  (y/n):  ");
+            Scanner input = new Scanner(System.in);
+            response = input.next(). charAt(0);
+        }
+
+        System.out.println("Bye - Come back soon!");
+    }
+}
